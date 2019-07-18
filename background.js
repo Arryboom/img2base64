@@ -25,19 +25,26 @@ function getMD() {
 function getMDres(){
 	  return function(info, tab) {
     //console.log("OOOO____WWWW:"+info.srcUrl)
-    getImgToBase64(info.srcUrl,LOG)
+	imgtittle=uuid().toUpperCase()
+    getImgToBase64(info.srcUrl,mdresimg)
   };
 }
 function mdimg(imgdata){
 	//console.log("![]("+imgdata+")");
 	copyTextToClipboard("!["+imgtittle+"]("+imgdata+")");
 }
+function mdresimg(imgdata){
+	//console.log("![]("+imgdata+")");
+	copyTextToClipboard("["+imgtittle+"]:"+imgdata);
+}
 var parent = chrome.contextMenus.create({"title": "Image2Base64","contexts":["image"]});
 var child1 = chrome.contextMenus.create(
-  {"title": "Get Base64 Encode String","type":"normal", "parentId": parent,"contexts" : ["image"], "onclick": getClickHandler()});
+  {"title": "Get Base64","type":"normal", "parentId": parent,"contexts" : ["image"], "onclick": getClickHandler()});
 var child2 = chrome.contextMenus.create(
-  {"title": "Get MarkdownBase64","type":"normal", "parentId": parent,"contexts" : ["image"], "onclick": getMD()});
-
+  {"title": "Get MarkdownBase64 Image Object","type":"normal", "parentId": parent,"contexts" : ["image"], "onclick": getMD()});
+var child2 = chrome.contextMenus.create(
+  {"title": "Get MarkdownBase64 Reference res","type":"normal", "parentId": parent,"contexts" : ["image"], "onclick": getMDres()});
+ 
 function LOG(data){
     console.log(data);
 }
@@ -80,4 +87,17 @@ function getImgToBase64(url,callback){
     canvas = null;
   };
   img.src = url;
+}
+function uuid() {
+    var s = [];
+    var hexDigits = "0123456789abcdef";
+    for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+    }
+    s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+    s[8] = s[13] = s[18] = s[23] = "-";
+ 
+    var uuid = s.join("");
+    return uuid;
 }
