@@ -9,7 +9,7 @@ var imgtittle;
 function getClickHandler() {
   return function(info, tab) {
     //console.log("OOOO____WWWW:"+info.srcUrl)
-    getImgToBase64(info.srcUrl,LOG)
+    getImgToBase64(info.srcUrl,copyTextToClipboard)
 
   };
 };
@@ -39,7 +39,7 @@ function mdresimg(imgdata){
 }
 var parent = chrome.contextMenus.create({"title": "Image2Base64","contexts":["image"]});
 var child1 = chrome.contextMenus.create(
-  {"title": "Get Base64","type":"normal", "parentId": parent,"contexts" : ["image"], "onclick": getClickHandler()});
+  {"title": "Get Base64","type":"normal", "parentId": parent,"contexts" : ["image"], "onclick": get});
 var child2 = chrome.contextMenus.create(
   {"title": "Get MarkdownBase64 Image Object","type":"normal", "parentId": parent,"contexts" : ["image"], "onclick": getMD()});
 var child2 = chrome.contextMenus.create(
