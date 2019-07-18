@@ -5,9 +5,10 @@
 /**
  * Returns a handler which will open a new window when activated.
  */
+var imgtittle;
 function getClickHandler() {
   return function(info, tab) {
-    console.log("OOOO____WWWW:"+info.srcUrl)
+    //console.log("OOOO____WWWW:"+info.srcUrl)
     getImgToBase64(info.srcUrl,LOG)
 
   };
@@ -15,19 +16,21 @@ function getClickHandler() {
 
 function getMD() {
   return function(info, tab) {
-    console.log("OOOO____WWWW:"+info.srcUrl)
+    //console.log("OOOO____WWWW:"+info.srcUrl)
+	imgtittle=info.srcUrl;
+	//LOG(info);
     getImgToBase64(info.srcUrl,mdimg)
   };
 };
 function getMDres(){
 	  return function(info, tab) {
-    console.log("OOOO____WWWW:"+info.srcUrl)
+    //console.log("OOOO____WWWW:"+info.srcUrl)
     getImgToBase64(info.srcUrl,LOG)
   };
 }
 function mdimg(imgdata){
-	console.log("![]("+imgdata+")");
-	copyTextToClipboard("![]("+imgdata+")");
+	//console.log("![]("+imgdata+")");
+	copyTextToClipboard("!["+imgtittle+"]("+imgdata+")");
 }
 var parent = chrome.contextMenus.create({"title": "Image2Base64","contexts":["image"]});
 var child1 = chrome.contextMenus.create(
